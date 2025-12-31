@@ -37,8 +37,6 @@ public class Transaction {
         this.amount = amount;
         this.date = date;
         this.description = description;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
     }
 
     public int getId() {
