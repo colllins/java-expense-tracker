@@ -5,6 +5,7 @@ import com.collins.expensetracker.model.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcUserRepository implements UserRepository{
@@ -92,16 +93,69 @@ public class JdbcUserRepository implements UserRepository{
 
     @Override
     public User findByEmail(String email) {
-        return null;
+        String sql = "SELECT id, name, email, created_at FROM users where email = ?";
+        try(Connection conn = connectionFactory.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                Timestamp ts = rs.getTimestamp("created_at");
+                LocalDateTime createdAt = ts.toLocalDateTime();
+                user.setCreatedAt(createdAt);
+
+                return user;
+            }else{
+                return null;
+            }
+        }catch (SQLException e){
+            throw new RuntimeException("Error Retrieving User By email", e);
+        }
     }
 
     @Override
     public List<User> findAll() {
-        return null;
+        String sql = "SELECT * FROM users";
+
+        try(Connection conn = connectionFactory.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+
+            List<User> users = new ArrayList<>();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                Timestamp ts = rs.getTimestamp("created_at");
+                LocalDateTime createdAt = ts.toLocalDateTime();
+                user.setCreatedAt(createdAt);
+
+                users.add(user);
+            }
+
+            return users;
+        }catch (SQLException e){
+            throw new RuntimeException("Error Retrieving All Users", e);
+        }
     }
 
     @Override
     public void deleteById(int id) {
+        String sql = "DELETE FROM users WHERE id = ?";
 
+        try(Connection conn = connectionFactory.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1,id);
+
+            int rows = ps.executeUpdate();
+//            System.out.println(rows+" rows affected");
+        }catch (SQLException e){
+            throw new RuntimeException("Failed to Delete user by id", e);
+        }
     }
 }
