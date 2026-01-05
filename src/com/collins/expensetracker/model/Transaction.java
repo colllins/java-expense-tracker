@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Transaction {
     private int id;                                         // Database-generated primary key.
     private int userId;                                     // Owner user id (foreign key to User).
-    private int categoryId;                                      // Category id (foreign key to Category).
+    private int categoryId;                                 // Category id (foreign key to Category).
     private TransactionType type;                           // EXPENSE or INCOME.
     private BigDecimal amount;                              // Money amount.
     private LocalDate date;                                 // Effective transaction date.

@@ -47,6 +47,16 @@ public class TransactionService {
     }
 
     /**
+     * Looks up a single transaction by its id.
+     *
+     * @param id the category id
+     * @return the Category if found, or null if no category has that id
+     */
+    public Transaction getTransactionById(int id){
+        return transactionRepository.findById(id);
+    }
+
+    /**
      * Returns all transactions for the given user.
      *
      * @param userId id of the user whose transactions should be fetched
@@ -76,7 +86,7 @@ public class TransactionService {
      * @param month  the month (1–12) to summarize
      * @return a MonthlySummary containing total income, total expenses, and net
      */
-    MonthlySummary getMonthlySummary(int userId, int year, int month){
+    public MonthlySummary getMonthlySummary(int userId, int year, int month){
 
         // First and last day of the requested month
         LocalDate start = LocalDate.of(year, month, 1);

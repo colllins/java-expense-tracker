@@ -49,9 +49,9 @@ public class MonthlySummary {
         return "MonthlySummary{" +
                 "year=" + year +
                 ", month=" + month +
-                ", totalIncome=" + totalIncome +
-                ", totalExpense=" + totalExpense +
-                ", net=" + net +
+                ", totalIncome= $" + totalIncome +
+                ", totalExpense= $" + totalExpense +
+                ", net= $" + net +
                 '}';
     }
 }

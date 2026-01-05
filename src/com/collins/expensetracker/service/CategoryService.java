@@ -60,9 +60,9 @@ public class CategoryService {
         return categoryRepository.findById(id);
     }
 
-    public Category getCategoryByUserName(int userId, String name){
-        return categoryRepository.findByUserIdAndName(userId, name);
-    }
+//    public Category getCategoryByUserName(int userId, String name){
+//        return categoryRepository.findByUserIdAndName(userId, name);
+//    }
 
     public void deleteCategory(int id){
         categoryRepository.deleteById(id);
